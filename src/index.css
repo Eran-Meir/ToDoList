@@ -25,6 +25,7 @@ button {
 
 .add-button {
     background-color: hsl(125, 70%, 60%);
+    margin-left: 10px;
 }
 
 .add-button:hover {
@@ -82,6 +83,7 @@ li {
     border-radius: 5px;
     display: flex;
     align-items: center;
+    transition: background-color 1s ease;
 }
 .tasks-text {
     flex: 1;
