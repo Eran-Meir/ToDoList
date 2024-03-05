@@ -20,7 +20,7 @@ function ToDoList() {
             targetObject.style.backgroundColor = 'hsl(10, 70%, 60%)';
             setTimeout(() => {
                 targetObject.style.backgroundColor = 'hsl(125, 70%, 60%)'; // Change back to original color (or any other desired color)
-            }, 500); // Delay of 3 seconds
+            }, 500);
         }
     }
 
@@ -30,21 +30,12 @@ function ToDoList() {
         setTasks(updatedTasks);
     }
 
-    function setActiveColor(button: HTMLButtonElement) {
-        const li = button.parentElement as HTMLLIElement; // Get the parent of the button (list item)
-        if (li !== null) {
-            li.style.backgroundColor = 'hsl(125, 70%, 40%)';
-            setTimeout(() => {
-                li.style.backgroundColor = 'hsl(0, 0%, 97%)'; // Change back to original color (or any other desired color)
-            }, 1000); // Delay of 3 seconds
-        }
-    }
 
     function moveTaskUp(index: number, button: HTMLButtonElement) {
         if (index > 0) {
             const updatedTasks = [...tasks];
             [updatedTasks[index], updatedTasks[index - 1]] = [updatedTasks[index - 1], updatedTasks[index]];
-            setActiveColor(button);
+            setActiveColor(index - 1);
             setTasks(updatedTasks);
         }
     }
@@ -53,8 +44,18 @@ function ToDoList() {
         if (index >= 0 && index + 1 < tasks.length) {
             const updatedTasks = [...tasks];
             [updatedTasks[index], updatedTasks[index + 1]] = [updatedTasks[index + 1], updatedTasks[index]];
-            setActiveColor(button);
+            setActiveColor(index + 1);
             setTasks(updatedTasks);
+        }
+    }
+
+    function setActiveColor(index: number) {
+        const li = document.querySelector(`ol li:nth-child(${index + 1})`) as HTMLLIElement;
+        if (li !== null) {
+            li.style.backgroundColor = 'hsl(125, 70%, 40%)';
+            setTimeout(() => {
+                li.style.backgroundColor = 'hsl(0, 0%, 97%)'; // Change back to original color (or any other desired color)
+            }, 500); // Delay of 3 seconds
         }
     }
 
