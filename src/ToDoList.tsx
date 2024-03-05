@@ -36,24 +36,24 @@ function ToDoList() {
             li.style.backgroundColor = 'hsl(125, 70%, 40%)';
             setTimeout(() => {
                 li.style.backgroundColor = 'hsl(0, 0%, 97%)'; // Change back to original color (or any other desired color)
-            }, 3000); // Delay of 3 seconds
+            }, 1000); // Delay of 3 seconds
         }
     }
 
-    function moveTaskUp(index: number, event: React.MouseEvent<HTMLButtonElement>) {
+    function moveTaskUp(index: number, button: HTMLButtonElement) {
         if (index > 0) {
             const updatedTasks = [...tasks];
-            const button = event.target as HTMLButtonElement;
             [updatedTasks[index], updatedTasks[index - 1]] = [updatedTasks[index - 1], updatedTasks[index]];
             setActiveColor(button);
             setTasks(updatedTasks);
         }
     }
 
-    function moveTaskDown(index: number) {
+    function moveTaskDown(index: number, button: HTMLButtonElement) {
         if (index >= 0 && index + 1 < tasks.length) {
             const updatedTasks = [...tasks];
             [updatedTasks[index], updatedTasks[index + 1]] = [updatedTasks[index + 1], updatedTasks[index]];
+            setActiveColor(button);
             setTasks(updatedTasks);
         }
     }
@@ -70,10 +70,13 @@ function ToDoList() {
                             <span className="tasks-text">{task}</span>
                             <button className="delete-button" onClick={() => deleteTask(index)}>Delete Task</button>
                             <button className="move-up-button"
-                                    onClick={(event: React.MouseEvent<HTMLButtonElement>) => moveTaskUp(index, event)}>Move
-                                Up
+                                    onClick={
+                                        (event: React.MouseEvent<HTMLButtonElement>) =>
+                                            moveTaskUp(index, event.target as HTMLButtonElement)}>Move Up
                             </button>
-                            <button className="move-down-button" onClick={() => moveTaskDown(index)}>Move Down
+                            <button className="move-down-button" onClick={
+                                (event: React.MouseEvent<HTMLButtonElement>) =>
+                                    moveTaskDown(index, event.target as HTMLButtonElement)}>Move Down
                             </button>
                         </li>
                     )}
