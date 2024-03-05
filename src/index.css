@@ -83,6 +83,7 @@ li {
     border-radius: 5px;
     display: flex;
     align-items: center;
+    transition: background-color 1s ease;
 }
 .tasks-text {
     flex: 1;
