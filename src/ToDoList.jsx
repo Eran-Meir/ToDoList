@@ -9,23 +9,40 @@ function ToDoList() {
         setNewTask(event.target.value);
     }
 
-    function addTask() {
-        if (newTask != null && newTask !== "") {
+    function addTask(event) {
+        if (newTask != null && newTask !== "" && !tasks.includes(newTask)) {
             setTasks(t => [...t, newTask]);
             setNewTask("");
+        } else {
+            const targetObject = event.target;
+            alert("Error: Unable to add task. Please check your input and ensure your task is defined and not already on the list.");
+            targetObject.style.backgroundColor = 'hsl(10, 70%, 60%)';
+            setTimeout(() => {
+                targetObject.style.backgroundColor = 'hsl(125, 70%, 60%)'; // Change back to original color (or any other desired color)
+            }, 500); // Delay of 3 seconds
         }
     }
 
-    function deleteTask() {
 
+    function deleteTask(index) {
+        const updatedTasks = tasks.filter((task, i) => i !== index);
+        setTasks(updatedTasks);
     }
 
     function moveTaskUp(index) {
-
+        if (index > 0) {
+            const updatedTasks = [...tasks];
+            [updatedTasks[index], updatedTasks[index - 1]] = [updatedTasks[index - 1], updatedTasks[index]];
+            setTasks(updatedTasks);
+        }
     }
 
     function moveTaskDown(index) {
-
+        if (index >= 0 && index + 1 < tasks.length) {
+            const updatedTasks = [...tasks];
+            [updatedTasks[index], updatedTasks[index + 1]] = [updatedTasks[index + 1], updatedTasks[index]];
+            setTasks(updatedTasks);
+        }
     }
 
     return (
@@ -39,8 +56,8 @@ function ToDoList() {
                         <li key={index}>
                             <span className="tasks-text">{task}</span>
                             <button className="delete-button" onClick={() => deleteTask(index)}>Delete Task</button>
-                            <button className="move-up-button" onClick={() => moveTaskUp(index)}>Move Up +</button>
-                            <button className="move-down-button" onClick={() => moveTaskDown(index)}>Move Down -
+                            <button className="move-up-button" onClick={() => moveTaskUp(index)}>Move Up</button>
+                            <button className="move-down-button" onClick={() => moveTaskDown(index)}>Move Down
                             </button>
                         </li>
                     )}
